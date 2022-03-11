@@ -114,9 +114,10 @@
 		<figcaption class="info-wrap">
 			<a href="#" class="title"><span th:text="${product.name}"></span></a>
 			<div class="action-wrap">
-				<a href="#" class="btn btn-primary btn-sm float-right"> <i class="fa fa-cart-plus"></i> Add </a>
+				<a th:href="@{/addItem/{id}(id=${product.id})}" class="btn btn-primary btn-sm float-right"> <i
+                        class="fa fa-cart-plus"></i> Add </a><!-- 添加购物车 -->
 				<div class="price-wrap h5">
-					<span class="price-new">$1280</span>
+					<span class="price-new" th:text="'$'+${product.price}">$</span>
 				</div> <!-- price-wrap.// -->
 			</div> <!-- action-wrap -->
 		</figcaption>
@@ -153,14 +154,19 @@
 	<td class="text-center"> 
 		<div class="m-btn-group m-btn-group--pill btn-group mr-2" role="group" aria-label="...">
 																		<button type="button"
+                                                                                th:onclick="'window.location.href = \'' + @{/decCartItem/{id}(id=${item.product.id})} + '\''"
                                                                                 class="m-btn btn btn-default"><i
                                                                                 class="fa fa-minus"></i></button>
+            <!-- 这是购物车数量减少按钮 -->
 																		<button type="button"
                                                                                 class="m-btn btn btn-default"
-                                                                                disabled><span th:text="${item.quantity}"></span></button>
+                                                                                disabled><span
+                                                                                th:text="${item.quantity}"></span></button>
 																		<button type="button"
+                                                                                th:onclick="'window.location.href = \'' + @{/addCartItem/{id}(id=${item.product.id})} + '\''"
                                                                                 class="m-btn btn btn-default"><i
                                                                                 class="fa fa-plus"></i></button>
+            <!-- 这是购物车数量增加按钮 -->
 																	</div>
 	</td>
 	<td> 
@@ -169,8 +175,9 @@
 		</div> <!-- price-wrap .// -->
 	</td>
 	<td class="text-right"> 
-	<a href="" class="btn btn-outline-danger"> <i class="fa fa-trash"></i></a>
-	</td>
+	<a th:href="@{/deleteCartItem/{id}(id=${item.product.id})}" class="btn btn-outline-danger"> <i
+            class="fa fa-trash"></i></a>
+	</td><!-- 这是购物车物品删除按钮 -->
 </tr>
 </tbody>
 </table>
@@ -179,7 +186,7 @@
                 <div class="box">
                     <dl class="dlist-align">
                         <dt>Tax:</dt>
-                        <dd class="text-right">12%</dd>
+                        <dd class="text-right">0%</dd>
                     </dl>
                     <dl class="dlist-align">
                         <dt>Discount:</dt>
@@ -187,21 +194,22 @@
                     </dl>
                     <dl class="dlist-align">
                         <dt>Sub Total:</dt>
-                        <dd class="text-right">$215</dd>
+                        <dd class="text-right" th:text="'$'+${totalPrice}">$215</dd>
                     </dl>
                     <dl class="dlist-align">
                         <dt>Total:</dt>
-                        <dd class="text-right h4 b"> $215</dd>
+                        <dd class="text-right h4 b" th:text="'$'+${totalPrice}">$215</dd>
                     </dl>
                     <div class="row">
                         <div class="col-md-6">
-                            <a href="#" class="btn  btn-default btn-error btn-lg btn-block"><i
+                            <a href="/cancel" class="btn  btn-default btn-error btn-lg btn-block"><i
                                     class="fa fa-times-circle "></i> Cancel </a>
-                        </div>
+                        </div><!-- 清空购物车 -->
                         <div class="col-md-6">
-                            <a href="#" class="btn  btn-primary btn-lg btn-block"><i class="fa fa-shopping-bag"></i>
+                            <a href="/charge" class="btn  btn-primary btn-lg btn-block"><i
+                                    class="fa fa-shopping-bag"></i>
                                 Charge </a>
-                        </div>
+                        </div><!-- 结账 -->
                     </div>
                 </div> <!-- box.// -->
             </div>
